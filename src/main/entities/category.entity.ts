@@ -6,4 +6,4 @@ interface ICategory {
     updatedAt?: string;
 }
 
-export default ICategory;
+export { ICategory };

@@ -8,4 +8,4 @@ interface IPost {
     updatedAt?: string;
 }
 
-export default IPost;
+export { IPost };

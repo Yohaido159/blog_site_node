@@ -7,7 +7,7 @@ interface IComment {
     updatedAt?: string;
 }
 
-export default IComment;
+export { IComment };
 
 
     

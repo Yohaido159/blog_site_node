@@ -1,13 +1,8 @@
 
-import IPost from '@entities/post.entity';
+import { IPost } from '@entities/post.entity';
+import { IBaseRepository } from '@repositories/base.repository';
 
-interface IPostRepository {
-    create(post: IPost): Promise<IPost>;
-    update(post: IPost): Promise<IPost>;
-    delete(id: string): Promise<IPost>;
-    find(id: string): Promise<IPost>;
-    findAll(): Promise<IPost[]>;
-
+interface IPostRepository extends IBaseRepository<IPost> {
     searchByTitle(title: string): Promise<IPost[]>;
     searchByContent(content: string): Promise<IPost[]>;
     searchByAuthor(author: string): Promise<IPost[]>;
@@ -15,4 +10,4 @@ interface IPostRepository {
     searchByCategories(categories: string[]): Promise<IPost[]>;
 }
 
-export default IPostRepository;
+export { IPostRepository };

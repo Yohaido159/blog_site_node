@@ -1,17 +1,30 @@
 
-import IUser from '@entities/user.entity';
+import { IUser } from '@entities/user.entity';
+import { IBaseRepository } from '@repositories/base.repository';
+import { model, Schema } from 'mongoose';
 
-interface IUserRepository {
-  create(user: IUser): Promise<IUser>;
-  update(user: IUser): Promise<IUser>;
-  delete(id: string): Promise<IUser>;
-  
-  find(id: string): Promise<IUser>;
-  findAll(): Promise<IUser[]>;
+export interface IUserRepository extends IBaseRepository<IUser> {
+  create(entity: { email: string; password: string }): Promise<IUser>;
   findByEmail(email: string): Promise<IUser>;
-  
-  signup(email: string, password: string): Promise<IUser>;
-  signin(email: string, password: string): Promise<IUser>;
 }
 
-export default IUserRepository;
+
+
+const UserSchema = new Schema({
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+});
+
+const UserModel = model<IUser>('User', UserSchema);
+
+class UserRepository implements IUserRepository {
+  async create(entity: { email: string; password: string }) {
+    const user = await UserModel.create(entity);
+    return user;
+  }
+}
+
+export default UserRepository;
+
+
+

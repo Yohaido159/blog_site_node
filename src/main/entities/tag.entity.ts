@@ -6,5 +6,5 @@ interface ITag {
     updatedAt?: string;
 }
 
-export default ITag;
+export { ITag };
 
