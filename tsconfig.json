@@ -22,7 +22,12 @@
     "baseUrl": "src",
     "paths": {
       "@/*": ["*"],
-      "@config": ["config"],
+      "@infrastructure/*": ["infrastructure/*"],
+      "@controllers/*": ["main/controllers/*"],
+      "@entities/*": ["main/entities/*"],
+      "@repositories/*": ["main/repositories/*"],
+      "@services/*": ["main/services/*"],
+      "@usecases/*": ["main/usecases/*"],
       "@utils/*": ["utils/*"]
     }
   },
