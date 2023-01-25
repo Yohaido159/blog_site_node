@@ -1,39 +1,48 @@
+// create Post controller for the user usecase
 
-import { IPostRepository } from '@repositories/post.repository';
+import { Request, Response } from 'express';
+
+import CreateUseCase from '@usecases/create-post.usecase';
 import BaseController from './base.controller';
+import { IPost } from '../entities/post.entity';
 
-class PostController extends BaseController {
-  private postRepository: IPostRepository;
-
-  constructor(postRepository: IPostRepository) {
-    super(postRepository);
-    this.postRepository = postRepository;
+class PostController extends BaseController<IPost> {
+  constructor(protected useCase: CreateUseCase) {
+    super(useCase);
   }
 
-  async searchByTitle(title: string) {
-    const posts = await this.postRepository.searchByTitle(title);
-    return posts;
+  async searchByTitle(req: Request, res: Response) {
+    const { title } = req.body;
+    const posts = await this.useCase.searchByTitle(title);
+    res.json(posts);
   }
 
-  async searchByContent(content: string) {
-    const posts = await this.postRepository.searchByContent(content);
-    return posts;
+  async searchByContent(req: Request, res: Response) {
+    const { content } = req.body;
+    const posts = await this.useCase.searchByContent(content);
+    res.json(posts);
   }
 
-  async searchByAuthor(author: string) {
-    const posts = await this.postRepository.searchByAuthor(author);
-    return posts;
+  async searchByAuthor(req: Request, res: Response) {
+    const { author } = req.body;
+    const posts = await this.useCase.searchByAuthor(author);
+    res.json(posts);
   }
 
-  async searchByTags(tags: string[]) {
-    const posts = await this.postRepository.searchByTags(tags);
-    return posts;
+  async searchByTags(req: Request, res: Response) {
+    const { tags } = req.body;
+    const posts = await this.useCase.searchByTags(tags);
+    res.json(posts);
   }
 
-  async searchByCategories(categories: string[]) {
-    const posts = await this.postRepository.searchByCategories(categories);
-    return posts;
+  async searchByCategories(req: Request, res: Response) {
+    const { categories } = req.body;
+    const posts = await this.useCase.searchByCategories(categories);
+    res.json(posts);
   }
+
 }
 
 export default PostController;
+
+

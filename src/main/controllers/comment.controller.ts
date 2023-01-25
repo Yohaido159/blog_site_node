@@ -1,23 +1,24 @@
+import { Request, Response } from 'express';
 
-import { ICommentRepository } from '@repositories/comment.repository';
 import BaseController from '@controllers/base.controller';
+import { IComment } from '@entities/comment.entity';
+import CreateUseCase from '@usecases/create-comment.usecase';
 
-class CommentController extends BaseController {
-  private commentRepository: ICommentRepository;
-
-  constructor(commentRepository: ICommentRepository) {
-    super(commentRepository);
-    this.commentRepository = commentRepository;
+class CommentController extends BaseController<IComment> {
+  constructor(protected useCase: CreateUseCase) {
+    super(useCase);
   }
 
-  async findByPost(post: string) {
-    const comments = await this.commentRepository.findByPost(post);
-    return comments;
+  async findByPost(req: Request, res: Response) {
+    const { post } = req.body;
+    const comments = await this.useCase.findByPost(post);
+    res.json(comments);
   }
 
-  async findByAuthor(author: string) {
-    const comments = await this.commentRepository.findByAuthor(author);
-    return comments;
+  async findByAuthor(req: Request, res: Response) {
+    const { author } = req.body;
+    const comments = await this.useCase.findByAuthor(author);
+    res.json(comments);
   }
 }
 

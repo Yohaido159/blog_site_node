@@ -1,4 +1,3 @@
-//create user controller for the user usecase
 
 import { Request, Response } from 'express';
 

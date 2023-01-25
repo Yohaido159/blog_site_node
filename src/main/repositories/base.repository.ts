@@ -1,15 +1,12 @@
 interface IBaseRepository<T> {
   findAll(): Promise<T[]>;
-  findById(id: string): Promise<T>;
+  findById(id: string): Promise<T | undefined>;
   create(entity: T): Promise<T>;
   update(id: string, entity: T): Promise<T>;
   delete(id: string): Promise<T>;
 }
 
 export { IBaseRepository };
-
-// import { IBaseRepository } from '@repositories/base.repository';
-import { model, Schema } from 'mongoose';
 
 class BaseRepository<T> implements IBaseRepository<T> {
   private model: any;
