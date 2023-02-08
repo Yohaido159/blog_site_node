@@ -1,20 +1,20 @@
 // Category Controller for Blog App
 // it not related to any dependency just plain typescript depend only the entity and repository (not specific to any database)
 
-import { ICategoryRepository } from '@repositories/category.repository';
 import BaseController from '@controllers/base.controller';
+import { Request, Response } from 'express-serve-static-core';
+import { ICategory } from '../entities/category.entity';
+import CreateUseCase from '../usecases/create-category.usecase';
 
-class CategoryController extends BaseController {
-  private categoryRepository: ICategoryRepository;
-
-  constructor(categoryRepository: ICategoryRepository) {
-    super(categoryRepository);
-    this.categoryRepository = categoryRepository;
+class CategoryController extends BaseController<ICategory> {
+  constructor(protected useCase: CreateUseCase) {
+    super(useCase);
   }
 
-  async findByName(name: string) {
-    const category = await this.categoryRepository.findByName(name);
-    return category;
+  async findByName(req: Request, res: Response) {
+    const { name } = req.body;
+    const category = await this.useCase.findByName(name);
+    res.json(category);
   }
 }
 

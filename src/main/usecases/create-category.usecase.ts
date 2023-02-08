@@ -7,7 +7,6 @@ import BaseUseCase from './base.usecase';
 class CategoryUseCase extends BaseUseCase<ICategory> {
   constructor(protected repository: ICategoryRepository) {
     super(repository);
-    this.repository = repository;
   }
 
   async findByName(name: string) {
