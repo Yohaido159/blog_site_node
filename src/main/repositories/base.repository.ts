@@ -21,7 +21,7 @@ class BaseRepository<T> implements IBaseRepository<T> {
   }
 
   async findById(id: string) {
-    const entity = await this.model.findById;
+    const entity = await this.model.findById(id);
     return entity;
   }
 
@@ -31,12 +31,12 @@ class BaseRepository<T> implements IBaseRepository<T> {
   }
 
   async update(id: string, entity: T) {
-    const updatedEntity = await this.model;
+    const updatedEntity = await this.model(id, entity, { new: true })
     return updatedEntity;
   }
 
   async delete(id: string) {
-    const deletedEntity = await this.model;
+    const deletedEntity = await this.model.findByIdAndDelete(id);
     return deletedEntity;
   }
 }
