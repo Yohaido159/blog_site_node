@@ -1,7 +1,11 @@
+tags:
+- name: users
+  description: users API
+
 paths:
-  /signup:
+  /users/signup:
     post:
-      description: Sign up a new user
+      summary: Sign up a new user
       requestBody:
         required: true
         content:
@@ -9,67 +13,83 @@ paths:
             schema:
               type: object
               properties:
-                username:
+                name:
                   type: string
-                  example: john123
+                  description: Name of the user
+                  default: John Doe 
+                email:
+                  type: string
+                  format: email
+                  description: Email of the user
+                  default: john@example.com
                 password:
                   type: string
-                  example: password123
-      responses:
-        201:
-          description: Successful signup
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Successfully registered user john123
-        400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Bad request. Missing required fields.
-  /login:
-    post:
-      description: Log in a user
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                username:
-                  type: string
-                  example: john123
-                password:
-                  type: string
-                  example: password123
+                  format: password
+                  description: Password of the user
+                  default: 123123123Ido
       responses:
         200:
-          description: Successful login
+          description: User created successfully
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  message:
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: ID of the user
+                      name:
+                        type: string
+                        description: Name of the user
+                      email:
+                        type: string
+                        format: email
+                        description: Email of the user
+                  token:
                     type: string
-                    example: Successfully logged in as john123
-        401:
-          description: Unauthorized
+                    description: JWT token for the user
+  /users/signin:
+    post:
+      summary: Log in an existing user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: Email of the user
+                password:
+                  type: string
+                  format: password
+                  description: Password of the user
+      responses:
+        200:
+          description: User logged in successfully
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  message:
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: ID of the user
+                      name:
+                        type: string
+                        description: Name of the user
+                      email:
+                        type: string
+                        format: email
+                        description: Email of the user
+                  token:
                     type: string
-                    example: Unauthorized. Incorrect username or password.
+                    description: JWT token for the user

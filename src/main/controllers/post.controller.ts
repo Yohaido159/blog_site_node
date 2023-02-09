@@ -2,7 +2,7 @@
 
 import { Request, Response } from 'express';
 
-import CreateUseCase from '@usecases/create-post.usecase';
+import CreateUseCase from '@/main/usecases/post.usecase';
 import BaseController from './base.controller';
 import { IPost } from '../entities/post.entity';
 

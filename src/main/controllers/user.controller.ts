@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import CreateUseCase from '@usecases/create-user.usecase';
+import CreateUseCase from '@/main/usecases/user.usecase';
 import BaseController from './base.controller';
 import { IUser } from '../entities/user.entity';
 import { throwIfFieldsMissing } from '@/shared/errors/general.errors';

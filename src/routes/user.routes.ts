@@ -1,13 +1,12 @@
 import createBaseController, { handleError } from '@/routes/base.routes';
 import UserController from '@/main/controllers/user.controller';
-import CreateUserUseCase from '@/main/usecases/create-user.usecase';
+import UserUseCase from '@/main/usecases/user.usecase';
 import UserRepository, { UserModel } from '@/main/repositories/user.repository';
 import { IUser } from '@/main/entities/user.entity';
 
 const userRepository = new UserRepository(UserModel);
-const createUserUseCase = new CreateUserUseCase(userRepository);
+const createUserUseCase = new UserUseCase(userRepository);
 const userController = new UserController(createUserUseCase);
-
 const userRouter = createBaseController<IUser>(userController);
 
 userRouter.post(

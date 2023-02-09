@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import BaseController from '@controllers/base.controller';
 import { IComment } from '@entities/comment.entity';
-import CreateUseCase from '@usecases/create-comment.usecase';
+import CreateUseCase from '@/main/usecases/comment.usecase';
 
 class CommentController extends BaseController<IComment> {
   constructor(protected useCase: CreateUseCase) {

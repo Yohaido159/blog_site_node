@@ -4,7 +4,7 @@
 import BaseController from '@controllers/base.controller';
 import { Request, Response } from 'express-serve-static-core';
 import { ICategory } from '../entities/category.entity';
-import CreateUseCase from '../usecases/create-category.usecase';
+import CreateUseCase from '../usecases/category.usecase';
 
 class CategoryController extends BaseController<ICategory> {
   constructor(protected useCase: CreateUseCase) {

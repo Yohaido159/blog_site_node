@@ -47,7 +47,7 @@ const validateUserExist = (user: IUser) => {
   }
 };
 
-class CreateUserUseCase extends BaseUseCase<IUser> {
+class UserUseCase extends BaseUseCase<IUser> {
   constructor(protected repository: IUserRepository) {
     super(repository);
     this.repository = repository;
@@ -73,7 +73,5 @@ class CreateUserUseCase extends BaseUseCase<IUser> {
     return { user, token };
   }
 }
-export default CreateUserUseCase;
 
-
-
+export default UserUseCase;

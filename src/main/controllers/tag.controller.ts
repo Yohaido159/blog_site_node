@@ -2,7 +2,7 @@
 
 import { Request, Response } from 'express';
 
-import CreateUseCase from '@usecases/create-tag.usecase';
+import CreateUseCase from '@/main/usecases/tag.usecase';
 import BaseController from './base.controller';
 import { ITag } from '../entities/tag.entity';
 
