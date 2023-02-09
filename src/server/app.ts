@@ -1,7 +1,17 @@
-import server from './server';
+import express, { ErrorRequestHandler } from 'express';
+import { connectToDB } from '@/infrastructure/database/mongodb';
 
-server.get('/', (req, res) => {
-    res.send('Hello, World!');
-});
+import allRoutes from '@/routes/all.routes';
+import { errorHandler, LoggerMiddleware } from '@/server/app.middleware';
 
-export default server;
+const app = express();
+
+connectToDB();
+app.use(LoggerMiddleware);
+app.use(express.json());
+
+app.use('/api', allRoutes);
+
+app.use(errorHandler);
+
+export default app;

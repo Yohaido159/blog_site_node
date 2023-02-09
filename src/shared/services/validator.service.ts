@@ -1,4 +1,4 @@
-export const emailValidate = (email: string): boolean => {
+export const emailValidator = (email: string): boolean => {
   /*
     ^: Matches the start of the string.
     [a-zA-Z0-9._%+-]+: Matches one or more characters that can be uppercase or lowercase letters (a-z or A-Z), digits (0-9), period (.), underscore (_), percent sign (%), plus sign (+), or hyphen (-). This part of the expression represents the local part of the email address.
@@ -12,7 +12,7 @@ export const emailValidate = (email: string): boolean => {
   return emailRegex.test(email);
 };
 
-export const passwordValidate = (password: string): boolean => {
+export const passwordValidator = (password: string): boolean => {
   /*
     One lowercase letter
     One uppercase letter
