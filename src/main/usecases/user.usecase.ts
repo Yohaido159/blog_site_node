@@ -3,7 +3,7 @@ import { IUser } from '@entities/user.entity';
 import BaseUseCase from './base.usecase';
 import { JWTGenerator, PasswordHasher } from '@/shared/services/auth.service';
 import { HttpException } from '@/shared/errors/http.error';
-import { throwIfUserExist, throwIfUserNotExist } from '@/shared/errors/user.errors';
+import { throwUserExist, throwUserNotExist } from '@/shared/errors/user.errors';
 
 const createUser = async (
   {
@@ -23,7 +23,7 @@ const createUser = async (
 const validateIsUserExist = async (email: string, repository: IUserRepository) => {
   const user = await repository.findByEmail(email);
   if (user) {
-    throwIfUserExist();
+    throwUserExist();
   }
 };
 
@@ -43,7 +43,7 @@ const verifyPassword = async (password: string, user: IUser) => {
 
 const validateUserExist = (user: IUser) => {
   if (!user) {
-    throwIfUserNotExist();
+    throwUserNotExist();
   }
 };
 
@@ -71,6 +71,10 @@ class UserUseCase extends BaseUseCase<IUser> {
 
     const token = generateJWTToken(user);
     return { user, token };
+  }
+
+  async me(user: IUser) {
+    return user;
   }
 }
 

@@ -12,10 +12,10 @@ export const throwIfEmailNotValid = (password: string) => {
   }
 };
 
-export const throwIfUserExist = () => {
+export const throwUserExist = () => {
   throw new HttpException(409, 'User already exists');
 };
 
-export const throwIfUserNotExist = () => {
+export const throwUserNotExist = () => {
   throw new HttpException(400, 'User does not exist');
 };

@@ -1,14 +1,14 @@
-import express, { Router } from 'express';
+import { Router } from 'express';
 import BaseController from '@/main/controllers/base.controller';
-import { NextFunction, Request, Response } from 'express-serve-static-core';
 
-function createBaseController<T>(controller: BaseController<T>) {
-  const router = express.Router();
+export const createBaseRouter = <T>(controller: BaseController<T>) => {
+  const router = Router();
 
   router.get(
     '/',
     handleError((req, res) => controller.findAll(req, res)),
   );
+
   router.get(
     '/:id',
     handleError((req, res) => controller.findById(req, res)),
@@ -27,28 +27,13 @@ function createBaseController<T>(controller: BaseController<T>) {
   );
 
   return router;
-}
-
-export default createBaseController;
-
-// export const handleError = (fn: (req: Request, res: Response, next: NextFunction) => Promise<void>) => {
-//   return (req: Request, res: Response, next: NextFunction) => {
-//     fn(req, res, next).catch(next);
-//   };
-// }; 
+};
 
 
-// export const handleError = fn =>
-// function asyncUtilWrap(...args) {
-//   const fnReturn = fn(...args)
-//   const next = args[args.length-1]
-//   return Promise.resolve(fnReturn).catch(next)
-// }
-
-export const handleError = (fn: (...args: any[]) => Promise<any>) =>
-  function asyncUtilWrap(...args: any[]): Promise<void> {
+export const handleError = (fn: (...args: any[]) => Promise<void>) => {
+  return function asyncUtilWrap(...args: any[]): Promise<void> {
     const fnReturn = fn(...args);
     const next = args[args.length - 1];
     return Promise.resolve(fnReturn).catch(next);
   };
-
+};

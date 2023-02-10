@@ -2,8 +2,14 @@ import { IUser } from '@entities/user.entity';
 import BaseRepository, { IBaseRepository } from '@repositories/base.repository';
 import { model, Schema } from 'mongoose';
 
+type CreateEntity = {
+  name: string;
+  email: string;
+  password: string;
+};
+
 export interface IUserRepository extends IBaseRepository<IUser> {
-  create(entity: { name: string; email: string; password: string }): Promise<IUser>;
+  create(entity: CreateEntity): Promise<IUser>;
   findByEmail(email: string): Promise<IUser>;
 }
 
@@ -14,10 +20,13 @@ const UserSchema = new Schema({
   __v: { type: Number, select: false },
 });
 
-export const UserModel = model<IUser>('User', UserSchema);
+UserSchema.pre('save', function (next) {
+  this.email = this.email.toLowerCase();
+  next();
+});
 
 class UserRepository extends BaseRepository<IUser> implements IUserRepository {
-  async create(entity: { name: string; email: string; password: string }) {
+  async create(entity: CreateEntity) {
     const user = await UserModel.create(entity);
     return user;
   }
@@ -28,4 +37,5 @@ class UserRepository extends BaseRepository<IUser> implements IUserRepository {
   }
 }
 
+export const UserModel = model<IUser>('User', UserSchema);
 export default UserRepository;
