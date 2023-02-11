@@ -24,7 +24,7 @@ const PostSchema = new Schema({
 });
 
 
-const PostModel = model<IPost>('Post', PostSchema);
+export const PostModel = model<IPost>('Post', PostSchema);
 
 class PostRepository extends BaseRepository<IPost> implements IPostRepository {
     async searchByTitle(title: string) {
