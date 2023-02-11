@@ -8,15 +8,18 @@ export interface ICommentRepository extends IBaseRepository<IComment> {
 
 import { model, Schema } from 'mongoose';
 
-const CommentSchema = new Schema({
+
+const commentSchema: Schema = new Schema({
+  post: { type: Schema.Types.ObjectId, ref: 'Post', required: true },
+  author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   content: { type: String, required: true },
-  author: { type: String, required: true },
-  post: { type: String, required: true },
-  createdAt: { type: Date, required: true },
-  updatedAt: { type: Date, required: true },
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
 });
 
-const CommentModel = model<IComment>('Comment', CommentSchema);
+
+
+const CommentModel = model<IComment>('Comment', commentSchema);
 
 class CommentRepository extends BaseRepository<IComment> implements ICommentRepository {
   async findByPost(post: string) {

@@ -13,17 +13,16 @@ export interface IUserRepository extends IBaseRepository<IUser> {
   findByEmail(email: string): Promise<IUser>;
 }
 
-const UserSchema = new Schema({
+const userSchema: Schema = new Schema({
   name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
+  email: { type: String, required: true },
   password: { type: String, required: true },
-  __v: { type: Number, select: false },
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
 });
 
-UserSchema.pre('save', function (next) {
-  this.email = this.email.toLowerCase();
-  next();
-});
+export const UserModel = model<IUser>('User', userSchema);
+
 
 class UserRepository extends BaseRepository<IUser> implements IUserRepository {
   async create(entity: CreateEntity) {
@@ -37,5 +36,4 @@ class UserRepository extends BaseRepository<IUser> implements IUserRepository {
   }
 }
 
-export const UserModel = model<IUser>('User', UserSchema);
 export default UserRepository;

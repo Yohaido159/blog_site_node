@@ -13,18 +13,19 @@ export interface IPostRepository extends IBaseRepository<IPost> {
 
 import { model, Schema } from 'mongoose';
 
-const PostSchema = new Schema({
+const postSchema: Schema = new Schema({
     title: { type: String, required: true },
     content: { type: String, required: true },
-    author: { type: String, required: true },
-    tags: { type: [String], required: true },
-    categories: { type: [String], required: true },
-    createdAt: { type: Date, required: true },
-    updatedAt: { type: Date, required: true },
-});
+    author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    tags: [{ type: Schema.Types.ObjectId, ref: 'Tag' }],
+    categories: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now },
+  });
+  
 
 
-export const PostModel = model<IPost>('Post', PostSchema);
+export const PostModel = model<IPost>('Post', postSchema);
 
 class PostRepository extends BaseRepository<IPost> implements IPostRepository {
     async searchByTitle(title: string) {

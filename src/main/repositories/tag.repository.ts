@@ -6,11 +6,14 @@ export interface ITagRepository extends IBaseRepository<ITag> {
   findByName(name: string): Promise<ITag | undefined>;
 }
 
-const TagSchema = new Schema({
-  name: { type: String, required: true, unique: true },
+const tagSchema: Schema = new Schema({
+  name: { type: String, required: true },
+  description: { type: String },
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
 });
 
-const TagModel = model<ITag>('Tag', TagSchema);
+const TagModel = model<ITag>('Tag', tagSchema);
 
 class TagRepository extends BaseRepository<ITag> implements ITagRepository {
   async findByName(name: string) {
