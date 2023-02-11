@@ -31,9 +31,6 @@ class PostRepository extends BaseRepository<IPost> implements IPostRepository {
 
     async findAll() {
         const posts = await PostModel.find().populate('author').populate('tags').populate('categories');
-        posts.forEach(post => {
-            post.author.password = undefined;
-        });
         return posts;
     }
 
