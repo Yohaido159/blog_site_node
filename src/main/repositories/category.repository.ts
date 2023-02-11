@@ -1,9 +1,9 @@
 import { ICategory } from '@entities/category.entity';
-import { IBaseRepository } from '@repositories/base.repository';
+import BaseRepository, { IBaseRepository } from '@repositories/base.repository';
 import mongoose , { Schema } from 'mongoose';
 
 interface ICategoryRepository extends IBaseRepository<ICategory> {
-  findByName(name: string): Promise<ICategory>;
+  findByName(name: string): Promise<ICategory[]>;
 }
 
 export { ICategoryRepository };
@@ -17,3 +17,11 @@ const categorySchema: Schema = new Schema({
 
 export const Category = mongoose.model<ICategory>('Category', categorySchema);
 
+class CategoryRepository extends BaseRepository<ICategory> implements ICategoryRepository {
+  async findByName(name: string) {
+    const Categorys = await Category.find({ name });
+    return Categorys;
+  }
+}
+
+export default CategoryRepository;

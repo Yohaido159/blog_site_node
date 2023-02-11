@@ -28,6 +28,15 @@ const postSchema: Schema = new Schema({
 export const PostModel = model<IPost>('Post', postSchema);
 
 class PostRepository extends BaseRepository<IPost> implements IPostRepository {
+
+    async findAll() {
+        const posts = await PostModel.find().populate('author').populate('tags').populate('categories');
+        posts.forEach(post => {
+            post.author.password = undefined;
+        });
+        return posts;
+    }
+
     async searchByTitle(title: string) {
         const posts = PostModel.find({ title });
         return posts;

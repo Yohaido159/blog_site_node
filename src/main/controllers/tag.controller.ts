@@ -10,12 +10,6 @@ class TagController extends BaseController<ITag> {
   constructor(protected useCase: CreateUseCase) {
     super(useCase);
   }
-
-  async create(req: Request, res: Response) {
-    const { name } = req.body;
-    const tag = await this.useCase.create(name);
-    res.json(tag);
-  }
 }
 
 export default TagController;

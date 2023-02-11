@@ -19,7 +19,7 @@ const commentSchema: Schema = new Schema({
 
 
 
-const CommentModel = model<IComment>('Comment', commentSchema);
+export const CommentModel = model<IComment>('Comment', commentSchema);
 
 class CommentRepository extends BaseRepository<IComment> implements ICommentRepository {
   async findByPost(post: string) {

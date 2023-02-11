@@ -13,7 +13,7 @@ const tagSchema: Schema = new Schema({
   updatedAt: { type: Date, default: Date.now },
 });
 
-const TagModel = model<ITag>('Tag', tagSchema);
+export const TagModel = model<ITag>('Tag', tagSchema);
 
 class TagRepository extends BaseRepository<ITag> implements ITagRepository {
   async findByName(name: string) {
