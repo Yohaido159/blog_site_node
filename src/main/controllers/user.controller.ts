@@ -47,6 +47,11 @@ class UserController extends BaseController<IUser> {
     res.json(user);
   }
 
+  async refresh(req: Request, res: Response) {
+    const user = await this.useCase.refreshToken(req.user as IUser);
+    res.json(user);
+  }
+
 }
 
 export default UserController;

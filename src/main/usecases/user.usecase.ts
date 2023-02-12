@@ -27,13 +27,6 @@ const validateIsUserExist = async (email: string, repository: IUserRepository) =
   }
 };
 
-const generateJWTToken = (user: IUser) => {
-  return JWTGenerator.generate({
-    id: user._id,
-    email: user.email,
-  });
-};
-
 const verifyPassword = async (password: string, user: IUser) => {
   const isValidPassword = await PasswordHasher.compare(password, user.password);
   if (!isValidPassword) {
@@ -45,6 +38,25 @@ const validateUserExist = (user: IUser) => {
   if (!user) {
     throwUserNotExist();
   }
+};
+
+const generateTokens = (user: IUser) => {
+  const accessToken = JWTGenerator.accessToken({
+    id: user._id,
+    email: user.email,
+  });
+
+  const refreshToken = JWTGenerator.refreshToken({
+    id: user._id,
+    email: user.email,
+  });
+
+  const tokens = {
+    accessToken,
+    refreshToken,
+  };
+
+  return tokens;
 };
 
 class UserUseCase extends BaseUseCase<IUser> {
@@ -59,9 +71,11 @@ class UserUseCase extends BaseUseCase<IUser> {
     const hashedPassword = await PasswordHasher.hash(password);
     const newUser = await createUser({ name, email, password: hashedPassword }, this.repository);
 
-    const token = generateJWTToken(newUser);
-
-    return { user: newUser, token };
+    const tokens = generateTokens(newUser);
+    return {
+      user: newUser,
+      tokens,
+    };
   }
 
   async signin(email: string, password: string) {
@@ -69,8 +83,17 @@ class UserUseCase extends BaseUseCase<IUser> {
     validateUserExist(user);
     await verifyPassword(password, user);
 
-    const token = generateJWTToken(user);
-    return { user, token };
+    const tokens = generateTokens(user);
+    
+    return {
+      user,
+      tokens,
+    };
+  }
+
+  async refreshToken(user: IUser) {
+    const tokens = generateTokens(user);
+    return { user, tokens };
   }
 
   async me(user: IUser) {

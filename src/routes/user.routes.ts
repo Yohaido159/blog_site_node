@@ -38,4 +38,15 @@
     handleError((req, res) => userController.signin(req, res)),
   );
 
+  
+  userRouter.post(
+    '/refresh',
+    passport.authenticate('jwt', { session: false }),
+    handleError((req, res) => userController.refresh(req, res)),
+  );
+
+
+
+  
+
   export default userRouter.use(baseUserRouter);
