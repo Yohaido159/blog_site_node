@@ -20,4 +20,4 @@ const specs = swaggerJSDoc({
   apis: [join(ROOT_DIR, '/src/main/controllers/user.schema.yml')],
 });
 
-export const swaggerMiddleware =  [swaggerUi.serve, swaggerUi.setup(specs)]
+export const swaggerMiddleware = ['/api-docs', swaggerUi.serve, swaggerUi.setup(specs)] as const;

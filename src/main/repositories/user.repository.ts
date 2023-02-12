@@ -13,16 +13,18 @@ export interface IUserRepository extends IBaseRepository<IUser> {
   findByEmail(email: string): Promise<IUser>;
 }
 
-const userSchema: Schema = new Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true },
-  password: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
-});
+const userSchema: Schema = new Schema(
+  {
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    password: { type: String, required: true },
+  },
+  {
+    timestamps: true,
+  },
+);
 
 export const UserModel = model<IUser>('User', userSchema);
-
 
 class UserRepository extends BaseRepository<IUser> implements IUserRepository {
   async create(entity: CreateEntity) {

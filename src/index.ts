@@ -1,6 +1,17 @@
+import express from 'express';
+
 import { PORT, NODE_ENV } from '@/config';
-import app from './server/app';
-import { logger } from './shared/utils/logger';
+import { logger } from '@/shared/utils/logger';
+import { connectToDB } from '@/infrastructure/database/mongodb';
+import { registerRoutes } from '@/routes/all.routes';
+import { registerMiddleware } from '@/server/app.middleware';
+
+const app = express();
+
+registerMiddleware(app);
+registerRoutes(app);
+
+connectToDB();
 
 app.listen(PORT, () => {
   logger.info(`=================================`);

@@ -26,8 +26,6 @@ class UserController extends BaseController<IUser> {
     throwIfEmailNotValid(email);
     throwIfPasswordNotValid(password);
 
-
-
     const user = await this.useCase.signup({ name, email, password });
     res.json(user);
   }

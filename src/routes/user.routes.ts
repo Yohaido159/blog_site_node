@@ -1,11 +1,11 @@
+  import { Router } from 'express';
+  import passport from 'passport';
+
   import { handleError, createBaseRouter } from '@/routes/base.routes';
   import UserController, { normalizeUserData } from '@/main/controllers/user.controller';
   import UserUseCase from '@/main/usecases/user.usecase';
   import UserRepository, { UserModel } from '@/main/repositories/user.repository';
   import { IUser } from '@/main/entities/user.entity';
-
-  import passport from 'passport';
-  import { Router } from 'express';
 
   const userRepository = new UserRepository(UserModel);
   const createUserUseCase = new UserUseCase(userRepository);

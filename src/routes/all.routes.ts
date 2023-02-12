@@ -1,14 +1,17 @@
-import { Router } from "express";
-import userRouter from "@/routes/user.routes";
-import postRouter from "@/routes/post.routes";
-import categoryRouter from "@/routes/categories.routes";
-import tagsRouter from "@/routes/tags.routes";
+import { Application, Router } from 'express';
+import userRouter from '@/routes/user.routes';
+import postRouter from '@/routes/post.routes';
+import categoryRouter from '@/routes/categories.routes';
+import tagsRouter from '@/routes/tags.routes';
 
-const router = Router();
+const allRoutes = Router();
 
-router.use("/users", userRouter);
-router.use("/post", postRouter);
-router.use("/categories", categoryRouter);
-router.use("/tags", tagsRouter);
+allRoutes.use('/users', userRouter);
+allRoutes.use('/post', postRouter);
+allRoutes.use('/categories', categoryRouter);
+allRoutes.use('/tags', tagsRouter);
 
-export default router;
+export const registerRoutes = (app: Application) => {
+  app.use('/api', allRoutes);
+};
+
