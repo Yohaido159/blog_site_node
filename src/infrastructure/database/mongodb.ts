@@ -5,7 +5,10 @@ export const dbConnection = {
   url: `mongodb://${DB_HOST}:${DB_PORT}/${DB_DATABASE}`,
 };
 
-export const connectToDB = () => {
+console.log("🚀 ~ file: mongodb.ts:7 ~ dbConnection:", dbConnection)
+
+export const connectToDB = async () => {
   mongoose.set('strictQuery', true);
-  mongoose.connect(dbConnection.url);
+  const a = await mongoose.connect(dbConnection.url);
+  console.log("🚀 ~ file: mongodb.ts:13 ~ connectToDB ~ a:", a)
 };
