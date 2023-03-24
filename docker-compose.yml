@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  mongodb:
+    image: mongo:4
+    volumes:
+      - mongodb_data:/data/db
+    ports:
+      - "27017:27017"
+
+  blog-api:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongodb
+
+volumes:
+  mongodb_data:
+    driver: local
+    
