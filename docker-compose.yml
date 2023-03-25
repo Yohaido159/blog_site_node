@@ -15,8 +15,10 @@ services:
       - "8000:8000"
     depends_on:
       - mongodb
+    volumes:
+      - ./src:/app/src  # Mount your source code folder to
+      - /app/node_modules
 
 volumes:
   mongodb_data:
     driver: local
-    

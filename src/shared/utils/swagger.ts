@@ -1,9 +1,10 @@
-import { ROOT_DIR } from "@/config";
-import { join } from "path";
-import swaggerJSDoc from "swagger-jsdoc";
+import { ROOT_DIR } from '@/config';
+import { join } from 'path';
+import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 
 const specs = swaggerJSDoc({
+  failOnErrors: true,
   definition: {
     openapi: '3.0.0',
     info: {
@@ -17,7 +18,7 @@ const specs = swaggerJSDoc({
       },
     ],
   },
-  apis: [join(ROOT_DIR, '/src/main/controllers/user.schema.yml')],
+  apis: ['/app/src/main/controllers/user.schema.yml'],
 });
 
 export const swaggerMiddleware = ['/api-docs', swaggerUi.serve, swaggerUi.setup(specs)] as const;

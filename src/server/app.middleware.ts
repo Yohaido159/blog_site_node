@@ -46,7 +46,7 @@ const loggerMiddleware = morgan(LOG_FORMAT, { stream });
 export const registerMiddleware = (app: Application) => {
   initPassport();
 
-  app.use(loggerMiddleware);
+  // app.use(loggerMiddleware);
   app.use(express.json());
   app.use(passport.initialize());
   app.use(...swaggerMiddleware);

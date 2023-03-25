@@ -1,0 +1,113 @@
+openapi: 3.0.0
+info:
+  title: User API
+  version: 1.0.0
+paths:
+  /signup:
+    post:
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Successfully created user
+          content:
+            application/json:
+              schema: &ref_1
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/User'
+                  tokens:
+                    type: object
+                    properties:
+                      accessToken:
+                        type: string
+                      refreshToken:
+                        type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema: &ref_0
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+        '409':
+          description: User already exists
+          content:
+            application/json:
+              schema: *ref_0
+  /signin:
+    post:
+      summary: Sign in a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Successfully signed in user
+          content:
+            application/json:
+              schema: *ref_1
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema: *ref_0
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema: *ref_0
+  /me:
+    get:
+      summary: Get user information
+      responses:
+        '200':
+          description: Successfully retrieved user information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /refresh:
+    post:
+      summary: Refresh user's token
+      responses:
+        '200':
+          description: Successfully refreshed user's token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
